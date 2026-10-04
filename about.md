@@ -2,7 +2,7 @@
 title: À propos
 ---
 
-Actuellement en Master 1 Intelligence Artificielle en alternance au laboratoire d'informatique (CERI / LIA), je développe des systèmes logiciels axés sur l'automatisation, la finance quantitative et les architectures web.
+Actuellement en Master 1 Intelligence Artificielle CMI et en alternance au laboratoire d'informatique d'Avignon (CERI / LIA), je développe des systèmes logiciels axés sur l'automatisation, la finance quantitative et les architectures web.
 
 Mon approche technique est généraliste et guidée par la curiosité : concevoir, prototyper et déployer des solutions concrètes dès qu'un problème ou un domaine présente un défi technique stimulant.
 

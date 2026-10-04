@@ -24,7 +24,7 @@ Le signal d'achat est déclenché uniquement si l'écart (l'Edge) entre le modè
 $$Edge = P_{bsm} - P_{ask}$$
 
 *   **Simulation VWAP & Slippage :** L'Edge n'est pas calculé sur le prix *Mid*, mais sur le prix d'exécution réel estimé. Le bot scanne la profondeur du carnet d'ordres (Order Book Depth) et simule un remplissage *Fill-Or-Kill* (FOK) pour calculer le prix moyen pondéré par le volume (VWAP).
-*   **Le Seuil de 12 % (Alpha Zone) :** Une analyse de données de production sur plus de 600 trades réels a démontré une "Death Zone" pour les Edges $< 12\%$ (rendement absorbé par le spread et les frais). Le bot filtre le bruit et n'attaque la liquidité que lorsque $Edge \ge 0.12$.
+*   **Le Seuil de X % (Alpha Zone) :** Une analyse de données de production sur plus de 600 trades réels a démontré une "Death Zone" pour les Edges $< X\%$ (rendement absorbé par le spread et les frais). Le bot filtre le bruit et n'attaque la liquidité que lorsque $Edge \ge X$.
 
 ### 3. Gestion du Risque : Kelly Fractionnaire
 Le dimensionnement des positions (Position Sizing) est dynamique et asymétrique. Il s'appuie sur le **Critère de Kelly**, ajusté par un multiplicateur de fractionnement (Kelly linéaire). Plus la probabilité mathématique diverge de la probabilité du marché, plus l'allocation du capital augmente, tout en préservant le portefeuille des risques de "sur-confiance" algorithmique.

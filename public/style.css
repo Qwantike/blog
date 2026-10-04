@@ -88,8 +88,10 @@ a {
   text-decoration: none;
 }
 
-.brand:hover {
-  color: var(--accent);
+.brand:hover,
+.brand[aria-current="page"] {
+  color: var(--text) !important;
+  background: transparent !important;
 }
 
 .menu {
