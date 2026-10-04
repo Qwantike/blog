@@ -15,8 +15,8 @@ Le projet exploite les inefficiences de tarification à court terme sur les marc
 ## Modélisation Quantitative & Stratégie
 
 ### 1. La "Fair Value" via Black-Scholes-Merton
-Les marchés "BTC Up/Down" à expiration courte (5/15 minutes) s'apparentent à des options binaires. L'algorithme ingère les flux de prix spot en temps réel (Binance API) et calcule la probabilité de victoire de l'événement à chaque *tick* ($dt = 2\,\text{s}$) selon le modèle BSM. 
-La volatilité implicite ($\sigma$) est lissée dynamiquement via une moyenne mobile exponentielle pondérée (EWMA avec $\lambda = 0.9979$) sur une fenêtre glissante afin de réagir aux chocs de marché (Flash Crashes) tout en filtrant le bruit.
+Les marchés "BTC Up/Down" à expiration courte (5/15 minutes) s'apparentent à des options binaires. L'algorithme ingère les flux de prix spot en temps réel (Binance API) et calcule la probabilité de victoire de l'événement à chaque *tick* ($dt = 2$ s) selon le modèle BSM. 
+La volatilité implicite ($\sigma$) est lissée dynamiquement via une moyenne mobile exponentielle pondérée (EWMA avec $\lambda = 0.9979$) sur une fenêtre glissante afin de réagir aux chocs de marché (Flash Crashes) tout en filtrant le bruit.  
 
 ### 2. Signal d'Entrée & "Edge" Net
 Le bot ne prédit pas la direction du marché, il trade le *Spread* mathématique.
@@ -52,7 +52,7 @@ La plomberie Web3 est séparée de la logique de trading pour préserver la band
 
 À l'issue de la phase de calibration en argent réel :
 *   **Taux de Victoire (Win Rate) global :** $\approx 68{,}8\,\%$
-*   **Alpha Temporel (Timing) :** Surperformance massive détectée lors de l'ouverture du marché ($T \in [0\,\text{s}, 60\,\text{s}]$) pour capturer les paniques directionnelles, et en fin de cycle ($T > 180\,\text{s}$) exploitant l'écrasement drastique de la volatilité ($\theta\text{-decay}$).
+*   **Alpha Temporel (Timing) :** Surperformance massive détectée lors de l'ouverture du marché ($T \in [0, 60]$ s) pour capturer les paniques directionnelles, et en fin de cycle ($T > 180$ s) exploitant l'écrasement drastique de la volatilité ($\theta$-decay).
 *   **Autonomie :** Infrastructure 100 % auto-réparante (gestion des Reverts, fallback des nœuds RPC, ajustements automatiques des allowances ERC-20).
 
 ## Stack Technologique
