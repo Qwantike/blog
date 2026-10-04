@@ -2,6 +2,14 @@
 title: À propos
 ---
 
-Salut, je suis Paul. Ce blog rassemble mes projets et mes notes.
+Actuellement en Master 1 Intelligence Artificielle en alternance au laboratoire d'informatique (CERI / LIA), je développe des systèmes logiciels axés sur l'automatisation, la finance quantitative et les architectures web.
 
-Écris ici qui tu es, ce que tu fais et comment te contacter. Ce fichier est `about.md`, à la racine du repo.
+Mon approche technique est généraliste et guidée par la curiosité : concevoir, prototyper et déployer des solutions concrètes dès qu'un problème ou un domaine présente un défi technique stimulant.
+
+---
+
+### Domaines d'exploration
+
+* **Intelligence artificielle & Systèmes autonomes :** Modèles d'apprentissage, expérimentations autour des architectures multi-agents et automatisation de processus décisionnels.
+* **Bots de trading & Finance :** Conception d'outils d'exécution, bot de market making (MM), stratégies d'arbitrage sur marchés prédictifs (Polymarket), et briques de gestion financière.
+* **Ingénierie logicielle & Web :** Développement d'applications complètes, traitement de données publiques (notamment open data immobilière) et conception d'outils métiers (CRM).
