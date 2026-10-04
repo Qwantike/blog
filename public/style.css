@@ -82,16 +82,14 @@ a {
 }
 
 .brand {
-  color: var(--text);
+  color: var(--text) !important;
   font-size: 1.15rem;
   font-weight: 650;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
-.brand:hover,
-.brand[aria-current="page"] {
-  color: var(--text) !important;
-  background: transparent !important;
+.brand:hover {
+  color: var(--accent);
 }
 
 .menu {
