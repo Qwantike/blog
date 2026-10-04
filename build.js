@@ -5,7 +5,8 @@ import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 
 marked.use(markedKatex({
-  throwOnError: false
+  throwOnError: false,
+  nonStandard: true
 }));
 
 // ---------- À PERSONNALISER ----------
