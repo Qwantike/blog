@@ -1,5 +1,5 @@
 ---
-title: NoristicImmo
+title: Open Data Immobilier
 description: Estimation immobilière automatisée, simulateur de crédit & dossier PDF générés à partir de données publiques.
 date: 2026-10-04
 type: project
