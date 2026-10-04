@@ -79,8 +79,7 @@ const layout = ({ title, desc, body, path = '/', article }) => `<!doctype html>
 ${article ? `<meta property="article:published_time" content="${article.date}">` : ''}
 <link rel="canonical" href="${SITE.url}${path}">
 <link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)}" href="/rss.xml">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>✦</text></svg>">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27 fill=%27%2315803d%27>✦</text></svg>"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body><div class="shell">
