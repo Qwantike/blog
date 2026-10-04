@@ -52,6 +52,25 @@ const group = (label, list, cur) => list.length ? `<details open><summary>${labe
 
 const layout = ({ title, desc, body, path = '/', article }) => `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
+<script>
+  (function() {
+    try {
+      var t = localStorage.getItem('theme');
+      var dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      if (t) {
+        document.documentElement.dataset.theme = t;
+      } else if (dark) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    } catch(e) {}
+  })();
+</script>
+<style>
+  /* Bloque le fond blanc instantanément avant le parsing de style.css */
+  :root[data-theme='dark'], html[data-theme='dark'] { background-color: #1c1c1c; color: #ececec; }
+  :root:not([data-theme='dark']), html:not([data-theme='dark']) { background-color: #ffffff; color: #171717; }
+  body { background-color: inherit; color: inherit; }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">
 <meta name="author" content="${esc(SITE.name)}">
@@ -61,9 +80,9 @@ ${article ? `<meta property="article:published_time" content="${article.date}">`
 <link rel="canonical" href="${SITE.url}${path}">
 <link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)}" href="/rss.xml">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>✦</text></svg>">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-<link rel="stylesheet" href="/style.css"></head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="/style.css">
+</head>
 <body><div class="shell">
 <aside class="side">
 <div class="side-top"><a class="brand" href="/">${esc(SITE.name)}</a>
@@ -75,8 +94,59 @@ ${SITE.links.map(([l, h]) => `<a href="${esc(h)}">${l}</a>`).join('')}</nav>
 <div class="col"><main>${body}</main>
 <footer><span>© ${new Date().getFullYear()} ${esc(SITE.name)}</span><a href="/rss.xml">RSS</a></footer></div>
 </div>
-<script>document.getElementById('theme').onclick=function(){var d=document.documentElement,k=d.dataset.theme?d.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches,n=k?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}};
-if(matchMedia('(max-width:800px)').matches)document.querySelectorAll('#files details').forEach(function(d){d.open=false})</script>
+
+<script>
+// Gestion du bouton de changement de thème
+document.getElementById('theme').onclick = function() {
+  var d = document.documentElement;
+  var isDark = d.dataset.theme ? d.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme:dark)').matches;
+  var next = isDark ? 'light' : 'dark';
+  d.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch(e) {}
+};
+
+// Repli auto des dossiers sur mobile
+if (matchMedia('(max-width:800px)').matches) {
+  document.querySelectorAll('#files details').forEach(function(d){ d.open = false; });
+}
+
+// Navigation instantanée sans rechargement ni FOUC
+document.addEventListener('click', async function(e) {
+  var a = e.target.closest('a');
+  if (!a || !a.href || a.target || a.origin !== location.origin || a.getAttribute('href').startsWith('#') || a.href.endsWith('.xml')) return;
+  
+  e.preventDefault();
+  try {
+    var res = await fetch(a.href);
+    if (!res.ok) { location.href = a.href; return; }
+    var text = await res.text();
+    var doc = new DOMParser().parseFromString(text, 'text/html');
+    
+    // Remplace la colonne centrale
+    document.querySelector('.col').innerHTML = doc.querySelector('.col').innerHTML;
+    document.title = doc.title;
+    history.pushState(null, '', a.href);
+    window.scrollTo(0, 0);
+
+    // Met à jour les états actifs des liens dans la sidebar
+    var currentPath = new URL(a.href).pathname.replace(/\\/$/, '') || '/';
+    document.querySelectorAll('.side a').forEach(function(link) {
+      var linkPath = new URL(link.href).pathname.replace(/\\/$/, '') || '/';
+      if (linkPath === currentPath) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  } catch(err) {
+    location.href = a.href;
+  }
+});
+
+window.addEventListener('popstate', function() {
+  location.reload();
+});
+</script>
 </body></html>`;
 
 const row = p => `<li><a class="row" href="/p/${p.slug}"><span class="t">${esc(p.title)}</span>
