@@ -5,12 +5,12 @@ import { marked } from 'marked';
 
 // ---------- À PERSONNALISER ----------
 const SITE = {
-  name: 'Ton Nom',
+  name: 'Paul',
   description: 'Projets et articles.',
   url: 'https://blog-psi-nine-87.vercel.app',
   links: [
     ['GitHub', 'https://github.com/Qwantike'],
-    ['Email', 'mailto:toi@exemple.com'],
+    ['Email', 'mailto:paul.moinereau@hotmail.fr'],
   ],
 };
 // -------------------------------------
@@ -34,10 +34,16 @@ const posts = fs.readdirSync('posts').filter(f => f.endsWith('.md')).map(f => {
   };
 }).filter(p => !p.draft).sort((a, b) => b.date.localeCompare(a.date));
 
+const projects = posts.filter(p => p.type === 'project');
+const articles = posts.filter(p => p.type === 'article');
+
 const links = p => [p.github && ['Code', p.github], p.url && ['Voir le projet', p.url]]
   .filter(Boolean).map(([l, h]) => `<a href="${esc(h)}" target="_blank" rel="noopener">${l}</a>`).join('');
 
 const ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>';
+
+const group = (label, list, cur) => list.length ? `<details open><summary>${label}</summary>${list.map(p =>
+  `<a href="/p/${p.slug}"${cur === `/p/${p.slug}` ? ' aria-current="page"' : ''}>${esc(p.title)}</a>`).join('')}</details>` : '';
 
 const layout = ({ title, desc, body, path = '/', article }) => `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
@@ -52,12 +58,19 @@ ${article ? `<meta property="article:published_time" content="${article.date}">`
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>✦</text></svg>">
 <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="/style.css"></head>
-<body><header class="site"><a class="brand" href="/">${esc(SITE.name)}</a>
-<nav>${SITE.links.map(([l, h]) => `<a href="${esc(h)}">${l}</a>`).join('')}
-<button id="theme" type="button" aria-label="Changer de thème" title="Changer de thème">${ICON}</button></nav></header>
-<main>${body}</main>
-<footer><span>© ${new Date().getFullYear()} ${esc(SITE.name)}</span><a href="/rss.xml">RSS</a></footer>
-<script>document.getElementById('theme').onclick=function(){var d=document.documentElement,k=d.dataset.theme?d.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches,n=k?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}}</script>
+<body><div class="shell">
+<aside class="side">
+<div class="side-top"><a class="brand" href="/">${esc(SITE.name)}</a>
+<button id="theme" type="button" aria-label="Changer de thème" title="Changer de thème">${ICON}</button></div>
+<nav class="menu" aria-label="Site"><a href="/about"${path === '/about' ? ' aria-current="page"' : ''}>À propos</a>
+${SITE.links.map(([l, h]) => `<a href="${esc(h)}">${l}</a>`).join('')}</nav>
+<nav id="files" aria-label="Articles">${group('Projets', projects, path)}${group('Articles', articles, path)}</nav>
+</aside>
+<div class="col"><main>${body}</main>
+<footer><span>© ${new Date().getFullYear()} ${esc(SITE.name)}</span><a href="/rss.xml">RSS</a></footer></div>
+</div>
+<script>document.getElementById('theme').onclick=function(){var d=document.documentElement,k=d.dataset.theme?d.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches,n=k?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}};
+if(matchMedia('(max-width:800px)').matches)document.querySelectorAll('#files details').forEach(function(d){d.open=false})</script>
 </body></html>`;
 
 const row = p => `<li><a class="row" href="/p/${p.slug}"><span class="t">${esc(p.title)}</span>
@@ -69,13 +82,22 @@ if (fs.existsSync('public')) fs.cpSync('public', 'dist', { recursive: true });
 
 fs.writeFileSync('dist/index.html', layout({
   title: SITE.name, desc: SITE.description,
-  body: section('Projets', posts.filter(p => p.type === 'project')) + section('Articles', posts.filter(p => p.type === 'article')),
+  body: section('Projets', projects) + section('Articles', articles),
 }));
 
 fs.writeFileSync('dist/404.html', layout({
   title: `Page introuvable – ${SITE.name}`, desc: 'Page introuvable.',
   body: '<section><h1>Page introuvable</h1><p>Cette page n’existe pas ou a été déplacée. <a href="/">Retour à l’accueil</a></p></section>',
 }));
+
+if (fs.existsSync('about.md')) {
+  const { data, content } = matter(fs.readFileSync('about.md', 'utf8'));
+  fs.mkdirSync('dist/about', { recursive: true });
+  fs.writeFileSync('dist/about/index.html', layout({
+    title: `${data.title ?? 'À propos'} – ${SITE.name}`, desc: data.description ?? SITE.description, path: '/about',
+    body: `<article><header><h1>${esc(data.title ?? 'À propos')}</h1></header><div class="prose">${marked.parse(content)}</div></article>`,
+  }));
+}
 
 for (const p of posts) {
   fs.mkdirSync(`dist/p/${p.slug}`, { recursive: true });

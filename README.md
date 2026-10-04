@@ -19,3 +19,5 @@ Images : mets-les dans `public/img/` et écris `![alt](/img/photo.png)`.
 **En local** : `npm install` puis `npm run dev`.
 **Personnaliser** : nom, tagline et liens en haut de `build.js` ; couleurs dans `public/style.css`.
 **Vercel** : importe le repo GitHub, c'est tout (`vercel.json` règle la config).
+
+**Page À propos** : modifie `about.md` à la racine.
