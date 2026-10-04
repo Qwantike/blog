@@ -21,7 +21,8 @@ La volatilité implicite ($\sigma$) est lissée dynamiquement via une moyenne mo
 ### 2. Signal d'Entrée & "Edge" Net
 Le bot ne prédit pas la direction du marché, il trade le *Spread* mathématique.
 Le signal d'achat est déclenché uniquement si l'écart (l'Edge) entre le modèle prédictif et la réalité du carnet d'ordres est supérieur à un seuil strict d'inefficience :
-$$\text{Edge} = P_{\text{bsm}} - P_{\text{ask}}$$  
+
+$$\text{Edge} = P_{\text{bsm}} - P_{\text{ask}}$$
 
 *   **Simulation VWAP & Slippage :** L'Edge n'est pas calculé sur le prix *Mid*, mais sur le prix d'exécution réel estimé. Le bot scanne la profondeur du carnet d'ordres (Order Book Depth) et simule un remplissage *Fill-Or-Kill* (FOK) pour calculer le prix moyen pondéré par le volume (VWAP).
 *   **Le Seuil de X % (Alpha Zone) :** Une analyse de données de production sur plus de 600 trades réels a démontré une "Death Zone" pour les Edges $< X\,\%$ (rendement absorbé par le spread et les frais). Le bot filtre le bruit et n'attaque la liquidité que lorsque $\text{Edge} \ge X$.
@@ -43,7 +44,7 @@ Le système est découpé en micro-services asynchrones (Python) pour garantir u
 ### 2. Trésorerie Automatisée (On-Chain / Cron Jobs)
 La plomberie Web3 est séparée de la logique de trading pour préserver la bande passante RPC (Alchemy) et gérer la concurrence des *Nonces* cryptographiques.
 *   **`collect_gains.py` (Redemption) :** Un processus d'arrière-plan scanne l'API Polymarket pour identifier les marchés résolus victorieux. Il interagit directement avec l'usine *Conditional Token Framework (CTF)* via `Web3.py` pour brûler les jetons (ERC-1155) et rapatrier les collatéraux (pUSD).
-*   **`wrap_usdce_to_pusd.py` (Smart Routing) :** Un algorithme de balayage (Sweep) détecte les reliquats d'USDC.e legacy. Si le solde dépasse le seuil de rentabilité de 20$ (pour justifier les frais de Gas EIP-1559), le script wrap automatiquement les fonds dans le smart contract `CollateralOnramp` pour réinjecter le pUSD dans le flux de trading.
+*   **`wrap_usdce_to_pusd.py` (Smart Routing) :** Un algorithme de balayage (Sweep) détecte les reliquats d'USDC.e legacy. Si le solde dépasse le seuil de rentabilité de 20 $ (pour justifier les frais de Gas EIP-1559), le script wrap automatiquement les fonds dans le smart contract `CollateralOnramp` pour réinjecter le pUSD dans le flux de trading.
 
 ---
 
@@ -52,7 +53,7 @@ La plomberie Web3 est séparée de la logique de trading pour préserver la band
 À l'issue de la phase de calibration en argent réel :
 *   **Taux de Victoire (Win Rate) global :** $\approx 68{,}8\,\%$
 *   **Alpha Temporel (Timing) :** Surperformance massive détectée lors de l'ouverture du marché ($T \in [0\,\text{s}, 60\,\text{s}]$) pour capturer les paniques directionnelles, et en fin de cycle ($T > 180\,\text{s}$) exploitant l'écrasement drastique de la volatilité ($\theta\text{-decay}$).
-*   **Autonomie :** Infrastructure 100 % auto-réparante (gestion des Reverts, fallback des noeuds RPC, ajustements automatiques des allowances ERC-20).
+*   **Autonomie :** Infrastructure 100 % auto-réparante (gestion des Reverts, fallback des nœuds RPC, ajustements automatiques des allowances ERC-20).
 
 ## Stack Technologique
 *   **Langage :** Python (Dataclasses, Threading)
