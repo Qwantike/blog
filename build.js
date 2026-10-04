@@ -2,6 +2,11 @@
 import fs from 'node:fs';
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import markedKatex from 'marked-katex-extension';
+
+marked.use(markedKatex({
+  throwOnError: false
+}));
 
 // ---------- À PERSONNALISER ----------
 const SITE = {
@@ -58,6 +63,7 @@ ${article ? `<meta property="article:published_time" content="${article.date}">`
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>✦</text></svg>">
 <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="/style.css"></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <body><div class="shell">
 <aside class="side">
 <div class="side-top"><a class="brand" href="/">${esc(SITE.name)}</a>

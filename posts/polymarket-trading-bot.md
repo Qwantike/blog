@@ -50,9 +50,9 @@ La plomberie Web3 est séparée de la logique de trading pour préserver la band
 ## Métriques de Performance (Données de Production)
 
 À l'issue de la phase de calibration en argent réel :
-*   **Taux de Victoire (Win Rate) global :** ≈ 68,8 %
-*   **Alpha Temporel (Timing) :** Surperformance massive détectée lors de l'ouverture du marché (`T ∈ [0s, 60s]`) pour capturer les paniques directionnelles, et en fin de cycle (`T > 180s`) exploitant l'écrasement drastique de la volatilité (décroissance thêta / *θ-decay*).
-*   **Autonomie :** Infrastructure 100 % auto-réparante (gestion des Reverts, fallback des nœuds RPC, ajustements automatiques des allowances ERC-20).  
+*   **Taux de Victoire (Win Rate) global :** $\approx 68.8\%$
+*   **Alpha Temporel (Timing) :** Surperformance massive détectée lors de l'ouverture du marché ($T \in [0s, 60s]$) pour capturer les paniques directionnelles, et en fin de cycle ($T > 180s$) exploitant l'écrasement drastique de la volatilité ($\theta$ decay).
+*   **Autonomie :** Infrastructure 100 % auto-réparante (gestion des Reverts, fallback des noeuds RPC, ajustements automatiques des allowances ERC-20).
 
 ## Stack Technologique
 *   **Langage :** Python (Dataclasses, Threading)
