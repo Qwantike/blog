@@ -9,7 +9,7 @@ marked.use(markedKatex({
   nonStandard: true
 }));
 
-// ---------- À PERSONNALISER ----------
+// ----------HEADER SIDEBAR ----------
 const SITE = {
   name: 'Paul',
   description: 'Projets et articles.',
@@ -88,7 +88,7 @@ ${article ? `<meta property="article:published_time" content="${article.date}">`
 <div class="side-top"><a class="brand" href="/">${esc(SITE.name)}</a>
 <button id="theme" type="button" aria-label="Changer de thème" title="Changer de thème">${ICON}</button></div>
 <nav class="menu" aria-label="Site"><a href="/about"${path === '/about' ? ' aria-current="page"' : ''}>À propos</a>
-${SITE.links.map(([l, h]) => `<a href="${esc(h)}">${l}</a>`).join('')}</nav>
+${SITE.links.map(([l, h]) => `<a href="${esc(h)}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${l}</a>`).join('')}</nav>
 <nav id="files" aria-label="Articles">${group('Projets', projects, path)}${group('Articles', articles, path)}</nav>
 </aside>
 <div class="col"><main>${body}</main>
