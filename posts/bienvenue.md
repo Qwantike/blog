@@ -1,6 +1,6 @@
 ---
-title: Bienvenue
-description: Comment ajouter un article à ce blog.
+title: Article 1
+description: ...
 date: 2026-10-03
 ---
 

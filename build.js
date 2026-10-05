@@ -13,7 +13,7 @@ marked.use(markedKatex({
 const SITE = {
   name: 'Paul',
   description: 'Projets et articles.',
-  url: 'https://blog-psi-nine-87.vercel.app',
+  url: 'https://www.pmoinereau.xyz',
   links: [
     ['GitHub', 'https://github.com/Qwantike'],
     ['Email', 'mailto:paul.moinereau@hotmail.fr'],
