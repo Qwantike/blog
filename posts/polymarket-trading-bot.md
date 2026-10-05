@@ -1,12 +1,12 @@
 ---
 title: Polymarket Trading Bot 
-description: HFT & inefficiences de marché.
+description: Inefficiences sur marché prédictif.
 date: 2026-10-04
 type: project
 ---
 
 ## Résumé Exécutif
-Conception, développement et mise en production d'un algorithme de trading haute-fréquence (HFT) autonome opérant sur l'exchange décentralisé **Polymarket** (Polygon). 
+Conception, développement et mise en production d'un algorithme de trading autonome opérant sur l'exchange décentralisé **Polymarket** (Polygon). 
 
 Le projet exploite les inefficiences de tarification à court terme sur les marchés prédictifs liés au Bitcoin (fenêtres de 5 et de 15 minutes). En utilisant une implémentation personnalisée du modèle de **Black-Scholes-Merton** pour définir la *Fair Value* d'un actif conditionnel, le bot exécute des arbitrages directionnels (Taker/FOK) 100 % automatisés de la détection du signal jusqu'au retrait des gains sur la blockchain.
 
